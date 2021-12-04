@@ -13,6 +13,10 @@ DJANGO VERCEL
 2. Deployment Service:
 ----------------------
 2.1. BASE SERVER base Ubuntu 20.00
+
+INSTALL SERVER Environment
+-------------------------------------------------------------------------------
+
 - Clone repository
   git clone https://github.com/herbew/django_vercel.git
 
@@ -35,15 +39,24 @@ DJANGO VERCEL
 - Activate
   source envdjangovercel/bin/activate
   
-2.2. INSTALL DJANGO
+
+INSTALL DJANGO Environment
+-------------------------------------------------------------------------------
 
 - cd /opt
   sudo ./django_vercel/utility/install_os_dependencies.sh install
+  
+
+INSTALL DJANGO Environment
+-------------------------------------------------------------------------------
   
 - source envdjangovercel/bin/activate
   cd django_vercel
   ./utility/install_python_dependencies.sh
   
+
+DJANGO Initialize
+-------------------------------------------------------------------------------
   ./manage.py makemigrations
   
   ./manage.py migrate sites
@@ -56,3 +69,4 @@ DJANGO VERCEL
 
 
 2.2. BASE SERVERLESS
+
