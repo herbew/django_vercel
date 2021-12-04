@@ -1,0 +1,39 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block style_extra_head %}
+    .dashboard input.logout {
+            background: var(--delete-button-bg);
+            color: var(--button-fg);
+        }
+        
+    .dashboard .submit-row {
+        padding: .75rem 1.5rem;
+        text-align: center;
+        width: 100%;
+        box-sizing: border-box;
+    }
+{% endblock style_extra_head %}
+
+{% block sub_title %}
+    {% trans "Sign Out" %}
+{% endblock sub_title %}
+
+{% block content %}
+    <form class="form-material form-horizontal" method="POST" action="{% url 'account_logout' %}" class="form-horizontal">
+        {% csrf_token %}
+        <div class="submit-row">
+            <p>{% trans 'Are you sure you want to logout?' %}</p>
+            {% if not redirect_field_value %}
+              <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}
+            <input class="logout" type="submit" value={% trans 'Logout' %}>
+        </div>
+    </form>
+{% endblock content %}
+
+
+
+
