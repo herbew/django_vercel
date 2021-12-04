@@ -1,4 +1,4 @@
-from .base import *  # noqa
+from .base import *  
 from .base import env
 
 # GENERAL
@@ -6,19 +6,15 @@ from .base import env
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
-SECRET_KEY = env('DJANGO_SECRET_KEY', default='alhO5ET1ChIYsJhQVTfxshMToR0hFOnwAITnc02lOOyeqILwMEZ9C13rJWJVfH6s')
+SECRET_KEY = env('DJANGO_SECRET_KEY')
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 IP_DEVELOPMENT = ["192.168.100.%s" % i for i in range(1, 100)] + ["192.168.0.%s" % i for i in range(1, 100)]
-IP_MOBILE = ["192.168.43.%s" % i for i in range(1, 255)]
 ALLOWED_HOSTS = [
     "localhost",
     "0.0.0.0",
     "127.0.0.1",
-    "188.166.234.227",
-    "209.97.174.80",
-    "116.197.135.45",
-    "simakad.stftjakarta.ac.id",
-] + IP_DEVELOPMENT + IP_MOBILE
+    ".vercel.app",
+] + IP_DEVELOPMENT 
 
 # CACHES
 # ------------------------------------------------------------------------------
@@ -33,7 +29,7 @@ CACHES = {
 # TEMPLATES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#templates
-TEMPLATES[0]['OPTIONS']['debug'] = DEBUG  # noqa F405
+TEMPLATES[0]['OPTIONS']['debug'] = DEBUG  
 
 # EMAIL
 # ------------------------------------------------------------------------------
@@ -45,9 +41,9 @@ EMAIL_PORT = 1025
 # django-debug-toolbar
 # ------------------------------------------------------------------------------
 # https://django-debug-toolbar.readthedocs.io/en/latest/installation.html#prerequisites
-INSTALLED_APPS += ['debug_toolbar']  # noqa F405
+INSTALLED_APPS += ['debug_toolbar']  
 # https://django-debug-toolbar.readthedocs.io/en/latest/installation.html#middleware
-MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']  # noqa F405
+MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']  
 # https://django-debug-toolbar.readthedocs.io/en/latest/configuration.html#debug-toolbar-config
 DEBUG_TOOLBAR_CONFIG = {
     'DISABLE_PANELS': [
@@ -62,7 +58,7 @@ INTERNAL_IPS = ['127.0.0.1', '10.0.2.2']
 # django-extensions
 # ------------------------------------------------------------------------------
 # https://django-extensions.readthedocs.io/en/latest/installation_instructions.html#configuration
-INSTALLED_APPS += ['django_extensions']  # noqa F405
+INSTALLED_APPS += ['django_extensions']  
 
 # Your stuff...
 # ------------------------------------------------------------------------------
