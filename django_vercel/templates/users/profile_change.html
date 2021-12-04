@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block style_extra_head %}
+    .dashboard .form-row #id_name, .dashboard .form-row #id_gender, .dashboard .form-row #id_birth_city, .dashboard .form-row #id_birth_date, .dashboard .form-row #id_address, .dashboard .form-row #id_mobile {
+        margin:10px;
+        padding: 8px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .dashboard .submit-row {
+        padding: .75rem 1.5rem;
+        text-align: right;
+        width: 100%;
+        box-sizing: border-box;
+    }
+{% endblock style_extra_head %}
+
+{% block sub_title %}
+    {% trans "Update Profile" %}
+{% endblock sub_title %}
+
+{% block content %}
+    <form class="form-material form-horizontal" method="POST" action="./" class="form-horizontal">
+        {% csrf_token %}
+        <div class="form-row">
+            {{ form }}
+        </div>
+        <div class="submit-row">
+            <input type="submit" value={% trans 'Update' %}>
+        </div>
+    </form>
+{% endblock content %}
+
+
