@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+{% load i18n %}
+{% load account %}
+{% load socialaccount %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+<html lang="en" dir="ltr">
+
+    <head>
+        <title>{% trans 'Email Confirmation' %}</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'admin/css/base.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'admin/css/nav_sidebar.css' %}">
+        <script src="{% static 'admin/js/nav_sidebar.js' %}" defer></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'admin/css/login.css' %}">
+        <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="{% static 'admin/css/responsive.css' %}">
+        <meta name="robots" content="NONE,NOARCHIVE">
+        <style>
+            .login .signup-row {
+                text-align: center;
+            }
+            .login .submit-row {
+                padding: .75rem 1.5rem;
+                text-align: center;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+        </style>
+    </head>
+
+
+    <body class=" login" data-admin-utc-offset="25200">
+        <!-- Container -->
+        <div id="container">
+        <!-- Header -->
+        <div id="header">
+            <div id="branding">
+                <h1>{% trans 'Confirm E-mail Address' %}</h1>
+            </div>
+        </div>
+        <!-- END Header -->
+    
+        <div class="main shifted" id="main">
+            <div class="content">
+                <!-- Content -->
+                <div id="content" class="colM">
+                    {% if confirmation %}
+        
+		                {% user_display confirmation.email_address.user as user_display %}
+		            
+                        <p>
+                            {% blocktrans with confirmation.email_address.email as email %}Please confirm that 
+                            <a href="mailto:{{ email }}">{{ email }}</a> 
+                            is an e-mail address for user {{ user_display }}.{% endblocktrans %}
+                        </p>
+                         
+                        <form action="{% url 'account_confirm_email' confirmation.key %}" method="post" id="login-form">
+                            {% csrf_token %}
+                            <div class="form-row">
+                            </div>
+                            <div class="submit-row">
+                                 <input type="submit" value={% trans 'Confirm' %}>
+                            </div>
+                        </form>
+                     {% else %}
+                        {% url 'account_email' as email_url %}
+                        <p>
+                            {% blocktrans %}This e-mail confirmation link expired or is invalid. Please 
+                            <a href="{{ email_url }}">issue a new e-mail confirmation request</a>.
+                            {% endblocktrans %}
+                        </p>
+                        
+		             {% endif %}
+		             <div class="signup-row">
+		                {% trans "Back to" %} <a href="{% url 'home' %}">{% trans "login" %}</a> {% trans "page." %}
+		             </div>
+                     
+                     <br class="clear">
+                </div>
+                <!-- END Content -->
+                
+                <div id="footer"></div>
+                </div>
+            </div>
+        </div>
+        <!-- END Container -->
+    </body>
+</html>
+
+
+
+
