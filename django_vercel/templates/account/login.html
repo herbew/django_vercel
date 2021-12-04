@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+{% load i18n %}
+{% load account %}
+{% load socialaccount %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+<html lang="en" dir="ltr">
+
+    <head>
+        <title>{% trans 'Sign In' %}</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'admin/css/base.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'admin/css/nav_sidebar.css' %}">
+        <script src="{% static 'admin/js/nav_sidebar.js' %}" defer></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'admin/css/login.css' %}">
+        <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="{% static 'admin/css/responsive.css' %}">
+        <meta name="robots" content="NONE,NOARCHIVE">
+        <style>
+
+            .login .form-row #id_login {
+                padding: 8px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .login .form-row #id_password {
+                margin-top: 10px;
+            }
+            
+            .login .submit-row {
+                padding: .75rem 1.5rem;
+                text-align: center;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .login .socmed-row {
+                padding: .75rem;
+                text-align: center;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .login .signup-row {
+                text-align: center;
+            }
+            
+            .login input.google {
+                background: var(--delete-button-bg);
+                color: var(--button-fg);
+            }
+            
+            .login .forgot_pwd {
+                text-align: right;
+                width: 100%;
+            }
+
+        </style>
+    </head>
+
+
+    <body class=" login" data-admin-utc-offset="25200">
+        <!-- Container -->
+        <div id="container">
+        <!-- Header -->
+        <div id="header">
+            <div id="branding">
+                <h1>{% trans 'Sign In' %}</h1>
+            </div>
+        </div>
+        <!-- END Header -->
+    
+        <div class="main shifted" id="main">
+            <div class="content">
+                <!-- Content -->
+                <div id="content" class="colM">
+                    {% block messages_wrapper %}
+	                    {% if messages %}
+                            {% for message in messages %}
+                                {% if message.tags == 'error' %}
+                                    <p class="errornote">
+                                        {{ message }}
+                                    </p>
+                                {% else %}
+                                    <p class="success"> 
+                                        {{ message }} 
+                                    </p>
+                                {% endif %}
+                            {% endfor %}
+	                    {% endif %}
+	                {% endblock messages_wrapper %}
+	                
+                    <div id="content-main">
+                        <form action="{% url 'account_login' %}" method="post" id="login-form">
+                            {% csrf_token %}
+                            <div class="form-row">
+                      		{{ form|crispy }}
+                            {% if not redirect_field_value %}
+                              <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                            {% endif %}
+                            </div>
+                            <div class="forgot_pwd">
+                                <a href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+                            </div>
+                            <div class="submit-row">
+                                <input type="submit" value={% trans 'Login' %}>
+                            </div>
+                         </form>
+                         {% get_providers as socialaccount_providers %}
+                         {% if socialaccount_providers %}
+                         
+                            <hr>
+                            <div class="socmed-row">
+                            {% for provider in socialaccount_providers %}
+                                {% if provider.name == 'Google' %}
+                                    <input class="google" onclick='redirect_url("{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}")' type="button" value="&nbsp;&nbsp;{{provider.name}}&nbsp;&nbsp;">
+                                {% endif %}
+                                
+                                {% if provider.name == 'Facebook' %}
+                                 | 
+                                    <input type="button" onclick='redirect_url("{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}")' value="{{provider.name}}">
+                                {% endif %}
+                            {% endfor %}
+                            </div>
+                         
+                         <div class="signup-row">
+                                {% trans "Don't have an account?" %} 
+                                <a href="{% url 'signup' %}"><b>{% trans "Sign Up" %}</b></a>
+                          </div>
+                          {% endif %}
+                      </div>
+          
+                      <br class="clear">
+                </div>
+                <!-- END Content -->
+                
+                <div id="footer"></div>
+        </div>
+        <!-- END Container -->
+    </body>
+    
+    
+    <script>
+        function redirect_url(url){
+	        window.location.href=url;
+        }
+    </script>
+    
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
