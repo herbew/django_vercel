@@ -36,8 +36,8 @@ urlpatterns += i18n_patterns(
     path("logout/", TemplateView.as_view(template_name='account/logout.html'), 
         name="logout"),
         
-    # Django Social oauth2
-    path("auth/", include('rest_framework_social_oauth2.urls')),
+#     # Django Social oauth2
+#     path("auth/", include('rest_framework_social_oauth2.urls')),
     
     # User Management
     path("users/", include('django_vercel.apps.users.urls', 
