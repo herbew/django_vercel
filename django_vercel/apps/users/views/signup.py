@@ -29,15 +29,20 @@ class SignupView(SignupView):
         context = super(SignupView, self).get_context_data(**kwargs)
 
         return context
-
+    
+    def get_success_url(self):
+        return reverse_lazy('users:redirect')
+    
     def form_valid(self, form):
         user = form.save(self.request)
         user.is_active = False
         user.save()
         messages.success(
         self.request, _("Registration account %s have successfully. Please contact to Admin for activating account.") % str(user.username))
-        return HttpResponseRedirect(reverse_lazy('users:redirect'))
-
+        
+        return complete_signup(self.request, user,
+                               app_settings.EMAIL_VERIFICATION,
+                               self.get_success_url())
         
 
 signup = SignupView.as_view()
